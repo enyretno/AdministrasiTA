@@ -6,9 +6,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $judul_penelitian = htmlspecialchars($_POST['judul_penelitian']);
   $tema_penelitian = htmlspecialchars($_POST['tema_penelitian']);
   $ta_option = isset($_POST['ta_option']) ? implode(", ", $_POST['ta_option']) : "Tidak dipilih";
-  $dosen_pembimbing_1 = htmlspecialchars($_POST['dosen_pembimbing_1']);
-  $dosen_pembimbing_2 = htmlspecialchars($_POST['dosen_pembimbing_2']);
+  $dosen_pembimbing1 = htmlspecialchars($_POST['dosen_pembimbing1']);
+  $dosen_pembimbing2 = htmlspecialchars($_POST['dosen_pembimbing2']);
 
+  $sql = "SELECT * FROM `pendaftaran_ta`;";
+
+  echo "<script>alert('Sukses mendaftar TA');</script>";
   echo "<h1>Data yang Dikirim</h1>";
   echo "<p>Nama: $nama</p>";
   echo "<p>NIM: $nim</p>";
@@ -16,8 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   echo "<p>Judul Penelitian: $judul_penelitian</p>";
   echo "<p>Tema Penelitian: $tema_penelitian</p>";
   echo "<p>Pilihan Tugas Akhir: $ta_option</p>";
-  echo "<p>Dosen Pembimbing 1: $dosen_pembimbing_1</p>";
-  echo "<p>Dosen Pembimbing 2: $dosen_pembimbing_2</p>";
+  echo "<p>Dosen Pembimbing 1: $dosen_pembimbing1</p>";
+  echo "<p>Dosen Pembimbing 2: $dosen_pembimbing2</p>";
   exit;
 }
 ?>
@@ -42,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   .header {
-    background-color: #4CAF50;
+    background-color: #007BFF;
     color: white;
     padding: 20px 0;
     text-align: center;
@@ -81,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   button {
-    background-color: #4CAF50;
+    background-color: #007BFF;
     border: none;
     color: white;
     font-weight: 600;
@@ -91,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   button:hover {
-    background-color: #45a049;
+    background-color: #0056b3;
   }
 
   .footer {
@@ -106,13 +109,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
   <!-- Header -->
   <div class="header">
-    Form Pendaftaran Tugas Akhir
+    Pendaftaran Tugas Akhir
   </div>
 
   <!-- Form Container -->
   <div class="container">
     <div class="form-container">
-      <form action="index.php" method="post">
+      <form action="pendaftaran_ta.php" method="post">
         <h1>Lengkapi Data</h1>
         <div class="form-group mb-3">
           <label for="nama">Nama Mahasiswa</label>
@@ -142,8 +145,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </div>
         </div>
         <div class="form-group mb-3">
-          <label for="dosen_pembimbing_1">Dosen Pembimbing 1</label>
-          <select id="dosen_pembimbing_1" name="dosen_pembimbing_1" class="form-select" required>
+          <label for="dosen_pembimbing1">Dosen Pembimbing 1</label>
+          <select id="dosen_pembimbing1" name="dosen_pembimbing1" class="form-select" required>
             <option value="">-- Pilih Dosen --</option>
             <option value="dosen1">Dr. Dosen 1</option>
             <option value="dosen2">Dr. Dosen 2</option>
@@ -151,8 +154,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </select>
         </div>
         <div class="form-group mb-3">
-          <label for="dosen_pembimbing_2">Dosen Pembimbing 2</label>
-          <select id="dosen_pembimbing_2" name="dosen_pembimbing_2" class="form-select" required>
+          <label for="dosen_pembimbing2">Dosen Pembimbing 2</label>
+          <select id="dosen_pembimbing2" name="dosen_pembimbing2" class="form-select" required>
             <option value="">-- Pilih Dosen --</option>
             <option value="dosen1">Dr. Dosen 1</option>
             <option value="dosen2">Dr. Dosen 2</option>
@@ -166,6 +169,93 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       © 2024 Form Pendaftaran Tugas Akhir
     </div>
   </div>
+
+  <!-- Javascript -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('form');
+    const namaInput = document.getElementById('nama');
+    const nimInput = document.getElementById('nim');
+    const programStudiInput = document.getElementById('program_studi');
+    const judulPenelitianInput = document.getElementById('judul_penelitian');
+    const temaPenelitianInput = document.getElementById('tema_penelitian');
+    const taOptions = document.querySelectorAll('input[name="ta_option[]"]');
+    const dosenPembimbing1 = document.getElementById('dosen_pembimbing1');
+    const dosenPembimbing2 = document.getElementById('dosen_pembimbing2');
+
+    form.addEventListener('submit', (event) => {
+      if (namaInput.value.trim() === '') {
+        alert('Nama Mahasiswa harus diisi!');
+        namaInput.focus();
+        event.preventDefault();
+        return;
+      }
+
+      const nimRegex = /^[0-9]{10}$/;
+      if (!nimRegex.test(nimInput.value.trim())) {
+        alert('NIM harus berupa angka dengan panjang 10 karakter!');
+        nimInput.focus();
+        event.preventDefault();
+        return;
+      }
+
+      if (programStudiInput.value.trim() === '') {
+        alert('Program Studi harus diisi!');
+        programStudiInput.focus();
+        event.preventDefault();
+        return;
+      }
+
+      if (judulPenelitianInput.value.trim() === '') {
+        alert('Judul Penelitian harus diisi!');
+        judulPenelitianInput.focus();
+        event.preventDefault();
+        return;
+      }
+
+      if (temaPenelitianInput.value.trim() === '') {
+        alert('Tema Penelitian harus diisi!');
+        temaPenelitianInput.focus();
+        event.preventDefault();
+        return;
+      }
+
+      let taSelected = false;
+      taOptions.forEach((checkbox) => {
+        if (checkbox.checked) {
+          taSelected = true;
+        }
+      });
+
+      if (!taSelected) {
+        alert('Minimal satu Pilihan Tugas Akhir (TA1/TA2) harus dipilih!');
+        event.preventDefault();
+        return;
+      }
+
+      if (dosenPembimbing1.value === '') {
+        alert('Dosen Pembimbing 1 harus dipilih!');
+        dosenPembimbing1.focus();
+        event.preventDefault();
+        return;
+      }
+
+      if (dosenPembimbing2.value === '') {
+        alert('Dosen Pembimbing 2 harus dipilih!');
+        dosenPembimbing2.focus();
+        event.preventDefault();
+        return;
+      }
+
+      if (dosenPembimbing1.value === dosenPembimbing2.value) {
+        alert('Dosen Pembimbing 1 dan Dosen Pembimbing 2 tidak boleh sama!');
+        dosenPembimbing2.focus();
+        event.preventDefault();
+        return;
+      }
+    });
+  });
+  </script>
 </body>
 
 </html>

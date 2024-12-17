@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Mahasiswa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+        }
+        /* Sidebar */
+        
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #e8ebf0;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .menu {
+            list-style: none;
+        }
+        
+        .menu li {
+            margin: 15px 0;
+        }
+        
+        .menu a {
+            text-decoration: none;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .menu a:hover {
+            color: #007bff;
+        }
+        /* Profile Section */
+        
+        .profile {
+            position: absolute;
+            bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+        }
+        
+        .profile img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+        
+        .profile div p {
+            margin: 0;
+            font-weight: bold;
+        }
+        
+        .profile div small {
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .signout {
+            color: #d9534f;
+            /* Warna merah */
+            text-decoration: none;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: inline-block;
+        }
+        
+        .signout:hover {
+            text-decoration: underline;
+            color: #c9302c;
+            /* Warna merah lebih tua */
+        }
+        /* Main Content */
+        
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .navbar h3 {
+            font-size: 1.2em;
+            color: #333;
+        }
+        
+        .navbar .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .navbar .nav-right i {
+            font-size: 1.2em;
+            color: #333;
+            cursor: pointer;
+        }
+        
+        .navbar input {
+            padding: 8px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .cards {
+            display: flex;
+            gap: 20px;
+            justify-content: flex-start;
+        }
+        
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 200px;
+            height: 150px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+            padding: 20px;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card i {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+        
+        .card p {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <ul class="menu">
+            <li><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="#"><i class="fas fa-user-graduate"></i> Bimbingan</a></li>
+            <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Seminar</a></li>
+            <li><a href="#"><i class="fas fa-book"></i> Publikasi</a></li>
+            <li><a href="#"><i class="fas fa-chart-bar"></i> Nilai</a></li>
+        </ul>
+        <div class="profile">
+            <img src="https://png.pngtree.com/png-vector/20241113/ourmid/pngtree-fire-flame-clipart-icon-vector-png-image_14318996.png" alt="Profile">
+            <div>
+                <p>Mahasiswa</p>
+                <small>Mahasiswa12@email.com</small>
+                <br>
+                <a href="#" class="signout">Sign Out</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Navbar -->
+        <div class="navbar">
+            <h3>Dashboard Mahasiswa</h3>
+            <div class="nav-right">
+                <input type="text" placeholder="Search...">
+                <i class="fas fa-cog" title="Pengaturan"></i>
+                <i class="fas fa-bell" title="Notifikasi"></i>
+                <i class="fas fa-question-circle" title="Bantuan"></i>
+                <i class="fas fa-user-circle" title="Profil"></i>
+            </div>
+        </div>
+
+        <!-- Cards Section -->
+        <div class="cards">
+            <div class="card">
+                <i class="fas fa-file-alt"></i>
+                <p>Form Pendaftaran Tugas Akhir</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-file"></i>
+                <p>Proposal</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-calendar-alt"></i>
+                <p>Jadwal Seminar</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

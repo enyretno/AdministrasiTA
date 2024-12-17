@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const judulPenelitianInput = document.getElementById('judul_penelitian');
     const temaPenelitianInput = document.getElementById('tema_penelitian');
     const taOptions = document.querySelectorAll('input[name="ta_option[]"]');
-    const dosenPembimbing1 = document.getElementById('dosen_pembimbing_1');
-    const dosenPembimbing2 = document.getElementById('dosen_pembimbing_2');
+    const dosenPembimbing1 = document.getElementById('dosen_pembimbing1');
+    const dosenPembimbing2 = document.getElementById('dosen_pembimbing2');
 
     form.addEventListener('submit', (event) => {
         if (namaInput.value.trim() === '') {

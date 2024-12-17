@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Seminar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+        }
+        /* Navbar */
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            color: #000000;
+            padding: 10px 20px;
+            border-bottom: 1px solid #dcdcdc;
+        }
+        
+        .navbar .title {
+            display: flex;
+            align-items: center;
+        }
+        
+        .navbar .title img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+        /* Search bar container */
+        
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .search-container .search-bar {
+            display: flex;
+            align-items: center;
+            width: 60%;
+        }
+        
+        .search-container input {
+            padding: 10px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .search-container button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background-color: #0056b3;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .search-container button:hover {
+            background-color: #003f8a;
+        }
+        /* Container */
+        
+        .container {
+            padding: 20px;
+        }
+        
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .header-section h2 {
+            margin: 0;
+        }
+        
+        .header-section button {
+            padding: 10px 20px;
+            background-color: #0056b3;
+            color: rgb(255, 255, 255);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .header-section button:hover {
+            background-color: #003f8a;
+        }
+        /* Table Styles */
+        
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+            background-color: #f2f2f2;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        table th,
+        table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #f1f0f7;
+        }
+        
+        table th {
+            background-color: #2d0bec;
+            font-weight: bold;
+        }
+        
+        .no-results {
+            text-align: center;
+            margin-top: 20px;
+            color: red;
+        }
+        /* Modal */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: rgb(242, 241, 244);
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input {
+            width: calc(100% - 10px);
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .btn-upload {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .btn-upload:hover {
+            background-color: #0056b3;
+        }
+        
+        .close-modal {
+            float: right;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: red;
+        }
+        
+        .close-modal:hover {
+            color: darkred;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="title">
+            <img src="https://via.placeholder.com/24" alt="Home Icon">
+            <span>Jadwal Seminar</span>
+        </div>
+    </div>
+
+    <!-- Search bar -->
+    <div class="search-container">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Cari Jadwal Seminar...">
+            <button onclick="searchSeminar()">Cari</button>
+        </div>
+    </div>
+
+    <!-- Container -->
+    <div class="container">
+        <div class="header-section">
+            <h2>Jadwal Seminar</h2>
+            <button onclick="openModal()">Tambah Jadwal</button>
+        </div>
+
+        <!-- Table for displaying seminars -->
+        <table>
+            <thead>
+                <tr>
+                    <th style="color: white;">Judul</th>
+                    <th style="color: white;">Tanggal</th>
+                    <th style="color: white;">Waktu</th>
+                    <th style="color: white;">Ruangan</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="seminarList"></tbody>
+        </table>
+        <div id="noResults" class="no-results" style="display:none;">Tidak ada jadwal seminar ditemukan.</div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="addSeminarModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">×</button>
+            <form id="addSeminarForm" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="judulSeminar">Judul Seminar</label>
+                    <input type="text" id="judulSeminar">
+                </div>
+                <div class="form-group">
+                    <label for="tanggalSeminar">Tanggal</label>
+                    <input type="date" id="tanggalSeminar">
+                </div>
+                <div class="form-group">
+                    <label for="waktuSeminar">Waktu</label>
+                    <input type="time" id="waktuSeminar">
+                </div>
+                <div class="form-group">
+                    <label for="ruanganSeminar">Ruangan</label>
+                    <input type="text" id="ruanganSeminar">
+                </div>
+                <button class="btn-upload" onclick="addSeminar()">Tambah</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Javascript -->
+    <script>
+        let seminars = [];
+
+        function openModal() {
+            document.getElementById('addSeminarModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('addSeminarModal').style.display = 'none';
+            document.getElementById('judulSeminar').value = '';
+            document.getElementById('tanggalSeminar').value = '';
+            document.getElementById('waktuSeminar').value = '';
+            document.getElementById('ruanganSeminar').value = '';
+        }
+
+        function addSeminar() {
+            const judul = document.getElementById('judulSeminar').value;
+            const tanggal = document.getElementById('tanggalSeminar').value;
+            const waktu = document.getElementById('waktuSeminar').value;
+            const ruangan = document.getElementById('ruanganSeminar').value;
+
+            if (!judul || !tanggal || !waktu || !ruangan) {
+                alert('Semua field harus diisi!');
+                return;
+            }
+
+            const seminar = {
+                judul,
+                tanggal,
+                waktu,
+                ruangan
+            };
+            seminars.push(seminar);
+            updateTable();
+            closeModal();
+        }
+
+        function updateTable(data = seminars) {
+            const list = document.getElementById('seminarList');
+            list.innerHTML = '';
+
+            if (data.length === 0) {
+                document.getElementById('noResults').style.display = 'block';
+                return;
+            }
+
+            document.getElementById('noResults').style.display = 'none';
+            data.forEach((seminar, index) => {
+                const row = `
+          <tr>
+            <td>${seminar.judul}</td>
+            <td>${seminar.tanggal}</td>
+            <td>${seminar.waktu}</td>
+            <td>${seminar.ruangan}</td>
+            <td><button onclick="deleteSeminar(${index})">Hapus</button></td>
+          </tr>
+        `;
+                list.innerHTML += row;
+            });
+        }
+
+        function searchSeminar() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = seminars.filter(s => s.judul.toLowerCase().includes(query));
+            updateTable(filtered);
+        }
+
+        function deleteSeminar(index) {
+            if (confirm('Apakah Anda yakin ingin menghapus jadwal ini?')) {
+                seminars.splice(index, 1);
+                updateTable();
+            }
+        }
+    </script>
+</body>
+
+</html>
